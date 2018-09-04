@@ -1,0 +1,28 @@
+{
+  "name": "node_restful",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://wenjieitk@github.com/wenjieitk/Node_RESTful.git"
+  },
+  "author": "wen jie",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wenjieitk/Node_RESTful/issues"
+  },
+  "homepage": "https://github.com/wenjieitk/Node_RESTful#readme",
+  "devDependencies": {
+    "jest": "^23.5.0"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "express": "^4.16.3",
+    "helmet": "^3.13.0",
+    "mongoose": "^5.2.13"
+  }
+}
