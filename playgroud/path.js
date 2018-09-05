@@ -5,5 +5,3 @@ let pathObj2 = path.parse(__dirname);
 
 console.log(pathObj);
 console.log(pathObj2);
-
-
