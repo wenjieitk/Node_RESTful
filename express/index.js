@@ -59,6 +59,18 @@ app.put('/api/courses/:id',(req,res) =>{
 });
 
 
+app.delete('/api/courses/:id',(req,res) => {
+    const course = courses.find(course => course.id === parseInt(req.params.id));
+    if(!course)
+        res.status(404).send('wrong id');
+    
+    const index = courses.indexOf(course);
+    courses.splice(index,1);
+
+    res.send(courses);
+});
+
+
 function validateCourse(course) {
     const schema = {
         name: Joi.string().min(3).required()
