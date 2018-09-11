@@ -1,12 +1,17 @@
 const Joi = require('joi');
 const express = require('express');
 const logger = require('./middleware/logger');
+const helmet = require('helmet');
+const morgan = require('morgan');
 const app = express();
 
 // middleware
 app.use(express.json());
 app.use(express.static('public')); // static assetes
+app.use(helmet); // api protection
+app.use(morgan); // log the api request
 app.use(logger); // custom function
+
 
 const courses = [
     {id:1, name: 'course1'},
