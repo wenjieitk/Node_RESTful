@@ -5,7 +5,8 @@ const app = express();
 
 // middleware
 app.use(express.json());
-app.use(logger);
+app.use(express.static('public')); // static assetes
+app.use(logger); // custom function
 
 const courses = [
     {id:1, name: 'course1'},
