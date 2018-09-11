@@ -8,8 +8,8 @@ const app = express();
 // middleware
 app.use(express.json());
 app.use(express.static('public')); // static assetes
-app.use(helmet); // api protection
-app.use(morgan); // log the api request
+app.use(helmet()); // api protection
+app.use(morgan('tiny')); // log the api request
 app.use(logger); // custom function
 
 
