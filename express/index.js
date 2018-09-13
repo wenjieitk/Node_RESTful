@@ -3,19 +3,35 @@ const express = require('express');
 const logger = require('./middleware/logger');
 const helmet = require('helmet');
 const morgan = require('morgan');
-const config = require('config');
+const config = require('config'); // export NODE_ENV=production
+/**
+ * export DEBUG=app:startup
+ * DEBUG=app:*
+ * DEBUG=app:startup nodemon index.js
+ */
+const startupDebugger = require('debug')('app:startup');
+const dbDebugger = require('debug')('app:db');
 const app = express();
 
 // middleware
 app.use(express.json());
-app.use(express.static('public')); // static assetes
+/**
+ * static assetes
+ * localhost:3000/
+ */
+app.use(express.static('public'));
 app.use(helmet()); // api protection
-app.use(morgan('tiny')); // log the api request
 app.use(logger); // custom function
 
-//configuration
+// env config
 console.log('application name : ' + config.get('name'));
 console.log('password : ' + config.get('password'));
+
+
+if(app.get('env') === 'development') {
+    app.use(morgan('tiny')); // log/debug the api request
+    startupDebugger('Morgan enabled...');
+}
 
 const courses = [
     {id:1, name: 'course1'},
