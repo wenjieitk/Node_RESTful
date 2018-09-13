@@ -22,11 +22,11 @@ app.use(express.json());
 app.use(express.static('public'));
 app.use(helmet()); // api protection
 app.use(logger); // custom function
+app.set('view engine','pug');// app.set('view', './views')
 
 // env config
 console.log('application name : ' + config.get('name'));
 console.log('password : ' + config.get('password'));
-
 
 if(app.get('env') === 'development') {
     app.use(morgan('tiny')); // log/debug the api request
@@ -41,7 +41,10 @@ const courses = [
 
 
 app.get('/', (req,res) => {
-    res.send('hello world');
+    res.render('index',{
+        title: 'PUG',
+        message: 'Hello'
+    });
 });
 
 
