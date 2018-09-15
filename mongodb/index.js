@@ -46,7 +46,7 @@ const Course = mongoose.model('Course', courseSchema);
 async function createCourse() {
     const course = new Course({
         name: 'HAHA Course',
-        category: 'web', //enum
+        category: '-', //enum
         author: 'Wen Jie',
         tags: ['frontend'],
         isPublish: true,
@@ -58,7 +58,8 @@ async function createCourse() {
         console.log('create : ',result);
     }
     catch(ex){
-        console.log('not able to create course : ', ex.errors);
+        for(field in ex.errors)
+            console.log(ex.errors[field].message);
     }
 }
 
