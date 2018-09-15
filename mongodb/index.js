@@ -17,7 +17,15 @@ const courseSchema = new mongoose.Schema({
         enum: ['web','mobile','network']
     },
     author: String,
-    tags: [String],
+    tags: {
+        type: Array,
+        validate: {
+            validator(v){
+                return v && v.length > 0;
+            },
+            mesaage :'tages should have at least 1 tag'
+        }
+    },
     date: {
         type: Date,
         default: Date.now
@@ -36,7 +44,7 @@ const Course = mongoose.model('Course', courseSchema);
 async function createCourse() {
     const course = new Course({
         name: 'HAHA Course',
-        category: '9', //enum
+        category: 'web', //enum
         author: 'Wen Jie',
         tags: ['node','frontend'],
         isPublish: true,
