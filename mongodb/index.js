@@ -20,8 +20,10 @@ const courseSchema = new mongoose.Schema({
     tags: {
         type: Array,
         validate: {
-            validator(v){
-                return v && v.length > 0;
+            isAsync: true,
+            validator(v,callback){
+                const result = v && v.length > 0;
+                callback(result);
             },
             mesaage :'tages should have at least 1 tag'
         }
@@ -46,7 +48,7 @@ async function createCourse() {
         name: 'HAHA Course',
         category: 'web', //enum
         author: 'Wen Jie',
-        tags: ['node','frontend'],
+        tags: ['frontend'],
         isPublish: true,
         price: 10
     });
@@ -112,6 +114,6 @@ async function getCourse() {
     console.log('\n\nfind 3 : ',courses3);
 }
 
-getCourse();
+// getCourse();
 
 
