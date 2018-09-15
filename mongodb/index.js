@@ -5,7 +5,17 @@ mongoose.connect('mongodb://localhost:27017/playground',{ useNewUrlParser: true 
     .catch(err => console.error('Cannot connect to db... ',err));
 
 const courseSchema = new mongoose.Schema({
-    name: String,
+    name: {
+        type: String,
+        required: true,
+        minlength: 5,
+        maxlength: 255
+    },
+    category: {
+        type: String,
+        required: true,
+        enum: ['web','mobile','network']
+    },
     author: String,
     tags: [String],
     date: {
@@ -13,25 +23,36 @@ const courseSchema = new mongoose.Schema({
         default: Date.now
     },
     isPublish: Boolean,
-    price: Number
+    price: {
+        type: Number,
+        required() {
+            return this.isPublish; // if isPublished is true, price is require
+        }
+    }
 });
 
 const Course = mongoose.model('Course', courseSchema);
 
 async function createCourse() {
     const course = new Course({
-        name: 'React Course',
+        name: 'HAHA Course',
+        category: '9', //enum
         author: 'Wen Jie',
         tags: ['node','frontend'],
         isPublish: true,
         price: 10
     });
-    
-    const result = await course.save();
-    console.log('create : ',result);
+
+    try{
+        const result = await course.save();
+        console.log('create : ',result);
+    }
+    catch(ex){
+        console.log('not able to create course : ', ex.errors);
+    }
 }
 
-// createCourse();
+createCourse();
 
 /**
  * eq - equal
@@ -46,7 +67,7 @@ async function createCourse() {
 async function getCourse() {
     const courses = await Course
         .find()
-        .count();
+        .countDocuments();
 
     const pageNumber = 2,pageSize = 3; // /api?pageNumber=2&pageSize=10
     const courses2 = await Course
